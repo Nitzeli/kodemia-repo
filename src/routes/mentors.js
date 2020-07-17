@@ -1,34 +1,52 @@
-
-//crear un router para nuestra aplicación 
+// crearemos router de app
 
 const express = require ('express')
 
 const router = express.Router ( )
-// un Router es un conjunto o subconjunto de rutas y funciona como lo hace app
 
-const koders = require ('../usecases/koders')
-const { request, response } = require('express')
+const mentors = require ('../usecases/mentors')
 
-// (este es nuestro home) localhost:8080/koders
-// localhost:8080/students
+router.get ('/', async (request, response) => {
 
-router.get ('/', async (request, response) =>{
-try {   // lo que queremos intentar 
-    const allKoders = await koders.getAll ()
+    try {
+        const allMentors = await mentors.getAll ()
 
-   response.json({
-       success: true,
-       data:{
-           koders:allKoders
-       }
-   })
-} catch (error) {  // si falla dar respuesta
-    response.status(error.status || 400)
-    response.json({
-        success: false,
-        error: error.message 
-    })
-}
+        response.json ({
+            success: true,
+            data:{
+                mentors: allMentors
+            }
+        })
+    } catch (error) {
+        response.status (error.status || 400)
+        response.json ({
+            success:false,
+            error: error.message
+        })
+    }
+
+})
+
+router.post('/',async (request, response)=>{
+    try {
+        const newMentorsData = request.body
+        console.log (newMentorsData)
+        const newMentor = await mentors.create(newMentorsData)
+        response.json({
+            success:true,
+            data: {
+                newMentor
+            }
+        })
+        
+    } catch (error) {
+        response.status(error.status || 400)
+        response.json({
+            success: false,
+            error: error.message 
+        })
+    }
+
 })
 
 router.post('/',async (request, response)=>{
@@ -58,12 +76,12 @@ router.post('/',async (request, response)=>{
 router.patch('/:id' , async (request, response) =>{
   try {
     const id = request.params.id
-    const KodersToUpdate = request.body
-    const koderUpdated = await koders.updateById(id,KodersToUpdate)
+    const MentorsToUpdate = request.body
+    const mentorUpdated = await mentors.updateById(id,MentorsToUpdate)
     response.json({
         success: true,
         data: {
-            koderUpdated
+            mentorUpdated
         }
     })
   } catch (error) {
@@ -79,11 +97,11 @@ router.patch('/:id' , async (request, response) =>{
 router.delete('/:id',async (request,response)=>{
     try {
         const id = request.params.id
-        const koderDeleted = await koders.deleteById(id)
+        const mentorDeleted = await mentors.deleteById(id)
         response.json({
             success: true,
             data:{
-                koderDeleted
+                mentorDeleted
             }
         })
     } catch (error) {
@@ -98,4 +116,4 @@ router.delete('/:id',async (request,response)=>{
 
 
 
-module.exports = router 
+module.exports = router
