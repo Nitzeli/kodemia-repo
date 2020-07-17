@@ -18,9 +18,12 @@ function updateById (id, newKoderData){
     return Koders.findByIdAndUpdate(id, newKoderData, { new: true })
 }
 
+/*
 function deleteById (id) {
     return Koders.findByIdAndRemove(id)
   }
+
+  */
 
 // solo se puede exportar una sola cosa y podemos crear el objeto {con llaves}
 // function deleteById

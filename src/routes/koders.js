@@ -7,6 +7,7 @@ const router = express.Router ( )
 // un Router es un conjunto o subconjunto de rutas y funciona como lo hace app
 
 const koders = require ('../usecases/koders')
+const { request, response } = require('express')
 
 // (este es nuestro home) localhost:8080/koders
 // localhost:8080/students
@@ -55,11 +56,10 @@ router.post('/',async (request, response)=>{
 })
 
 router.patch('/:id' , async (request, require) =>{
-    console.log ('patch')
     try {
-        const id = request.params
-        const newKoder = request.body.id
-        const koderUpdated = await koders.updateById(id, request.body)
+        const {id} = request.params.id
+        const currentKoder = request.body
+        const koderUpdated = await koders.updateById(currentKoder, request.body)
         response.json ({
             success:true,
             message: 'Koder updated',
@@ -75,5 +75,15 @@ router.patch('/:id' , async (request, require) =>{
         })
     }
 })
+
+/*router.delete('/' , (request, require)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+})
+*/
+
 
 module.exports = router 
