@@ -7,7 +7,10 @@ const router = express.Router ( )
 // un Router es un conjunto o subconjunto de rutas y funciona como lo hace app
 
 const koders = require ('../usecases/koders')
-const { response, request } = require('express')
+
+const auth = require('../middlewares/auth')
+
+const methods = require ('../middlewares/methods')      // borrar
 
 router.use((request, response, next)=>{
     console.log ('middleware router koders', request.charles),
@@ -44,9 +47,9 @@ try {   // lo que queremos intentar
 }
 })
 
-router.post('/',async (request, response)=>{
+router.post('/', auth, async (request, response)=>{
     try {
-        console.log ('post')
+        console.log ('koder:', request.koders)
         const newKodersData = request.body
         console.log (newKodersData)
         const newKoder = await koders.create(newKodersData)

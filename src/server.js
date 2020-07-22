@@ -3,15 +3,16 @@
 
 const express = require ('express')
 
+const cors = require ('cors')
+
 const app = express ()
 
 const kodersRouter = require ('./routes/koders')
-
 const mentorsRouter = require('./routes/mentors') 
-const { request } = require('express')
-
 const authRouter = require ('./routes/auth')
+const methods = require ('./middlewares/methods')
 
+app.use(cors())
 app.use(express.json())
 
 // middleware a nivel de aplicación
@@ -32,7 +33,7 @@ app.use((request, response, next)=>{
 
 
 // montando el router 
-
+app.use(methods)
 app.use('/koders', kodersRouter)
 app.use('/mentors',mentorsRouter)
 app.use ('/auth', authRouter)
