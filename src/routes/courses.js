@@ -4,7 +4,6 @@ const express = require ('express')
 const router = express.Router ( )
 
 const courses = require ('../usecases/courses')
-const { request, response } = require('express')
 
 router.get ('/', async (request, response) => {
 
@@ -51,7 +50,7 @@ router.patch('/:id' , async (request, response) =>{
     try {
         const id = request.params.id
         const coursesToUpdate = request.body
-        const courseUpdated = await courses.updateById(id, coursesToUpdate)
+        const courseUpdated = await courses.update(id,coursesToUpdate)
         
     response.json({
         success: true,

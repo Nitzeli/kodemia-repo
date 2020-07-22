@@ -10,7 +10,7 @@ function create(courseData){
     return Courses.create(courseData)
 }
 
-function updatebyId (idCourse, CoursesToUpdate){
+function update (idCourse, CoursesToUpdate){
     return Courses.findByIdAndUpdate (idCourse, CoursesToUpdate)
 }
 
@@ -21,6 +21,6 @@ function deleteById (idCourse ) {
 module.exports = {
     getAll, 
     create,
-    updatebyId,
+    update,
     deleteById
 }
